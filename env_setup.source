@@ -1,0 +1,15 @@
+#*****************************environment variables******************************************#
+setenv VERIF "$PWD/verif"
+setenv SRC "$PWD/src"
+setenv RUN "$PWD/run"
+setenv TB_TEST "$PWD/tests"
+setenv COMP "$PWD/verif/components"
+
+#****************************uvm and vcs tool library files**********************************#
+
+setenv UVM_HOME "/nfs/site/eda/data/eda_0006/accellera/uvm/1.1d/common"
+source /p/com/env/psetup/prod/bin/setupTool vcsmx L-2016.06-SP2 -bits 64 -roam
+setenv VCS_LIB /p/hdk/rtl/cad/x86-64_linux30/synopsys/vcsmx/L-2016.06-SP2-6/suse64
+setenv PATH /p/hdk/rtl/cad/x86-64_linux30/synopsys/vcsmx/L-2016.06-SP2-6/bin/:$PATH
+setenv VCS_HOME /p/hdk/rtl/cad/x86-64_linux30/synopsys/vcsmx/L-2016.06-SP2-6
+#setenv VERDI_HOME /nfs/site/disks/ccdo.soc.cad_root.1/cad/x86-64_linux26/synopsys/verdi/K-2015.09-SP1-1

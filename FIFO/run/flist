@@ -1,0 +1,4 @@
+../tb/fifo_package.sv
+../tb/fifo_interface.sv
+../src/FIFO.v
+../tb/fifo_top.sv
