@@ -1,0 +1,15 @@
+
+
+../sv/mc_packages.sv
+../verif/mc_read_test.sv
+../vip/mc_master/mc_agent.sv
+../vip/mc_master/mc_base_test.sv
+../vip/mc_master/mc_driver.sv
+../vip/mc_master/mc_env.sv
+../vip/mc_master/mc_monitor.sv
+../vip/mc_master/mc_sequence_item.sv
+../vip/mc_master/mc_sequencer.sv
+../vip/mc_master/mc_sequence.sv
+../sv/mc_interface.sv
+../tb/mc_tb.sv
+../../design/memory_controller.v

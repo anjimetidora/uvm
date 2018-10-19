@@ -1,0 +1,40 @@
+QuestaSim vlog 10.1c Compiler 2012.07 Jul 27 2012
+/home/sevitech/questa_sim/bin/../linux/vlog +acc -sv -mfcu -timescale 1ns/1ns -f flist -l comp.log 
+-- Compiling package mc_package
+** Error: ../verif/mc_read_test.sv(1): near "base_test": syntax error, unexpected IDENTIFIER
+** Error: ../verif/mc_read_test.sv(1): Error in class extension specification.
+** Error: ../vip/mc_master/mc_agent.sv(1): near "uvm_agent": syntax error, unexpected IDENTIFIER
+** Error: ../vip/mc_master/mc_agent.sv(1): Error in class extension specification.
+** Error: ../vip/mc_master/mc_base_test.sv(1): near "uvm_test": syntax error, unexpected IDENTIFIER
+** Error: ../vip/mc_master/mc_base_test.sv(1): Error in class extension specification.
+** Error: ../vip/mc_master/mc_driver.sv(1): near "uvm_driver": syntax error, unexpected IDENTIFIER
+** Error: ../vip/mc_master/mc_driver.sv(1): Error in class extension specification.
+** Error: ../vip/mc_master/mc_env.sv(1): near "#": syntax error, unexpected '#', expecting class
+** Error: ../vip/mc_master/mc_monitor.sv(1): near "uvm_monitor": syntax error, unexpected IDENTIFIER
+** Error: ../vip/mc_master/mc_monitor.sv(1): Error in class extension specification.
+** Error: ../vip/mc_master/mc_sequence_item.sv(1): (vlog-2744) An import statement is illegal when directly within a class scope.
+** Error: ../vip/mc_master/mc_sequence_item.sv(1): Could not find the package (mc_packages).  Design read will continue, but expect a cascade of errors after this failure.  Furthermore if you experience a vopt-7 error immediately before this error then please check the package names or the library search paths on the command line.
+** Error: ../vip/mc_master/mc_sequence_item.sv(2): (vlog-2744) An import statement is illegal when directly within a class scope.
+** Error: ../vip/mc_master/mc_sequence_item.sv(4): (vlog-2163) Macro `uvm_object_utils is undefined.
+** Error: ../vip/mc_master/mc_sequence_item.sv(4): near "(": syntax error, unexpected '(', expecting function or task
+** Error: ../vip/mc_master/mc_sequencer.sv(3): (vlog-2163) Macro `uvm_component_utils is undefined.
+** Error: ../vip/mc_master/mc_sequencer.sv(3): near "(": syntax error, unexpected '(', expecting function or task
+** Error: ../verif/mc_read_test.sv(8): (vlog-2894) Class 'mc_sequencer' is parameterized.  Parameterized nested classes currently not supported.
+** Error: ../vip/mc_master/mc_sequence.sv(2): (vlog-2163) Macro `uvm_object_utils is undefined.
+** Error: ../vip/mc_master/mc_sequence.sv(2): near "(": syntax error, unexpected '(', expecting function or task
+-- Compiling interface mc_interface
+** Error: ../sv/mc_interface.sv(1): Illegal use of 'automatic' for variable declaration (clk).
+** Error: ../sv/mc_interface.sv(3): Illegal use of 'automatic' for variable declaration (reset).
+** Error: ../sv/mc_interface.sv(4): 'clk' already declared in this scope (mc_interface).
+** Error: ../sv/mc_interface.sv(6): (vlog-2730) Undefined variable: 'DATA_WIDTH'.
+** Error: ../sv/mc_interface.sv(8): (vlog-2730) Undefined variable: 'ADDR_WIDTH'.
+** Error: ../sv/mc_interface.sv(3): A static declaration may not use any non-static references in its initial expression
+** Error: ../sv/mc_interface.sv(1): A static declaration may not use any non-static references in its initial expression
+** Error: ../vip/mc_master/mc_sequencer.sv(2): near "m": syntax error, unexpected IDENTIFIER, expecting class
+** Note: (vlog-2286) Using implicit +incdir+/home/sevitech/questa_sim/uvm-1.1b/../verilog_src/uvm-1.1b/src from import uvm_pkg
+** Error: ../tb/mc_tb.sv(3): near "m": syntax error, unexpected IDENTIFIER, expecting class
+** Error: ../../design/memory_controller.v(4): near "module": syntax error, unexpected module, expecting IDENTIFIER or TYPE_IDENTIFIER
+** Error: ../../design/memory_controller.v(4): Illegal digit for specified base in numeric constant.
+** Error: ../../design/memory_controller.v(5): Illegal digit for specified base in numeric constant.
+** Error: ../../design/memory_controller.v(15): Illegal use of 'automatic' for variable declaration (mem).
+** Error: ../../design/memory_controller.v(16): near "always": syntax error, unexpected always, expecting class
