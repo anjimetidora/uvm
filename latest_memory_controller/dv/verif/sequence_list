@@ -1,0 +1,13 @@
+//*******************************DV_logic*************************************//
+//												File Name : sequence_list.sv
+//												File Type : system_verilog
+//										Creation Date : 26-10-2018
+//												File Type : system_verilog
+//													 Author : Dorababu
+//****************************************************************************//
+../verif/read_in_reserve_test/read_in_reserve_seq.sv
+../verif/read_only_test/read_only_seq.sv
+../verif/read_test_1/read_seq_1.sv
+../verif/read_test_2/read_seq2.sv
+../verif/write_in_reserve_test/write_in_reserve_seq.sv
+../verif/write_test_1/write_seq_1.sv

@@ -6,16 +6,16 @@ function new(string name="base_test", uvm_component parent=null);
 endfunction
 
 
-mc_environmet mc_env;
+mc_env env;
 
-function build_phase(uvm_phase phase);
+function void build_phase(uvm_phase phase);
   super.build_phase(phase);
-  mc_env=mc_environmet::type_id::create("mc_env",this);
+  env=mc_env::type_id::create("mc_env",this);
 endfunction
 
 
-function end_of_elaboration_phase(uvm_phase phase);
-  super.end_of_elaboration(phase);
+function void end_of_elaboration_phase(uvm_phase phase);
+  super.end_of_elaboration_phase(phase);
   uvm_top.print_topology();
 endfunction
 

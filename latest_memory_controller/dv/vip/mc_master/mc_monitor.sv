@@ -1,61 +1,93 @@
 class mc_monitor extends uvm_monitor;
 `uvm_component_utils(mc_monitor)
 
+mc_sequence_item mon_req;
+
 virtual mc_interface vif;
-uvm_analysis_port#(mc_sequence_item) data_out;
+uvm_analysis_port#(mc_sequence_item) ap;
 
 function new(string name="mc_monitor",uvm_component parent);
   super.new(name,parent);
 endfunction
 
 
-function build_phase(uvm_phase phase);
+function void build_phase(uvm_phase phase);
   super.build_phase(phase);
+   this.ap=new("ap",this);  
+   mon_req=mc_sequence_item::type_id::create("mon_req",this);
 endfunction
 
-function connect_phase(uvm_phase phase);
+function void connect_phase(uvm_phase phase);
   super.connect_phase(phase);
-	if(!uvm_config_db#(mc_interface)::get(.contxt(this),
-										  .inst_name(""),
-										  .field_name("mc_interface"),
-										  .value(vif)))
-  `uvm_error("get_interface""virtual interface is not available")
+	if(!uvm_config_db#(virtual mc_interface)::get(.cntxt(this),
+																								.inst_name(""),
+																								.field_name("vif"),
+																							  .value(vif)))
+  `uvm_error("get_interface","virtual interface is not available")
   else
-	`uvm_info(get_name(),$sformate,"virtual interface is connected")
+	`uvm_info(get_name(),$sformatf("virtual interface is connected"),UVM_HIGH)
 endfunction
 
 
-task run_phase();
-
-  forever
+virtual task run_phase(uvm_phase phase);
+	$display("/******************************before forever******************************************/");
+forever
 begin
-	if(vif.mon_cb.w_r=='b1)
-	begin
-	data_out.reset<=vif.mon_cb.reset;
-	data_out.w_r<=vif.mon_cb.w_r;
-	data_out.in_data<=vif.mon_cb.in_data;
-	data_out.en<=vif.mon_cb.en;
-	data_out.wr_addr<=vif.mon_cb.wr_addr;
-	data_out.data_out<=vif.mon_cb.data_out;
-	data_out.error<=vif.mon_cb.error;
-	end
-	if(vif.mon_cb.w_r=='b0)
-	begin
-	  	if(vif.mon_cb.w_r=='b1)
-	begin
-	data_out.reset<=vif.mon_cb.reset;
-	data_out.w_r<=vif.mon_cb.w_r;
-	data_out.in_data<=vif.mon_cb.in_data;
-	data_out.en<=vif.mon_cb.en;
-	data_out.wr_addr<=vif.mon_cb.wr_addr;
-	data_out.data_out<=vif.mon_cb.data_out;
-	data_out.error<=vif.mon_cb.error;
-	end
-
+	@(posedge vif.clk);
+		mon_req.w_r=vif.mon_cb.w_r;
+	mon_req.in_data=vif.mon_cb.in_data;
+	mon_req.en=vif.mon_cb.en;
+	mon_req.wr_addr=vif.mon_cb.wr_addr;
+	mon_req.data_out=vif.mon_cb.data_out;
+	mon_req.slv_error=vif.mon_cb.slv_error;
+	$display("/******************************monitor block  signals******************************************/");
+	mon_req.print();
+ap.write(mon_req);
+//end
+//	if(!vif.w_r)
+//	begin
+//			mon_req.w_r=vif.mon_cb.w_r;
+//	mon_req.in_data=vif.mon_cb.in_data;
+//	mon_req.en=vif.mon_cb.en;
+//	mon_req.wr_addr=vif.mon_cb.wr_addr;
+//	mon_req.data_out=vif.mon_cb.data_out;
+//	mon_req.slv_error=vif.mon_cb.slv_error;
+//	$display("/******************************monitor block read signals******************************************/");
+//	mon_req.print();
+//
+//	end
 end
-$monitor("data_monitor=%0p",data_out);
-data_out.write(req);
 endtask
+//  forever
+//	  $display("this is monitor block......................///////////////////////");
+//begin
+//	@(posedge vif.mon_cb.clk)
+//  if(vif.mon_cb.w_r=='b1)
+//	begin
+//	  $display("this is monitor block......................///////////////////////");
+//	mon_req.w_r=vif.mon_cb.w_r;
+//	mon_req.in_data=vif.mon_cb.in_data;
+//	mon_req.en=vif.mon_cb.en;
+//	mon_req.wr_addr=vif.mon_cb.wr_addr;
+//	mon_req.data_out=vif.mon_cb.data_out;
+//	mon_req.slv_error=vif.mon_cb.slv_error;
+//	mon_req.print();
+//    end
+//	if(vif.mon_cb.w_r=='b0)
+//	begin
+//	mon_req.w_r=vif.mon_cb.w_r;
+//	mon_req.in_data=vif.mon_cb.in_data;
+//	mon_req.en=vif.mon_cb.en;
+//	mon_req.wr_addr=vif.mon_cb.wr_addr;
+//	mon_req.data_out=vif.mon_cb.data_out;
+//	mon_req.slv_error=vif.mon_cb.slv_error;
+//    end
+//	mon_req.print();
+//	$display("monitor data=%0p",mon_req);
+//end
+//
+//endtask
+endclass
 
 
 

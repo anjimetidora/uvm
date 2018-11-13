@@ -1,0 +1,15 @@
+//*******************************DV_logic*************************************//
+
+//												File Name : test_list.sv
+//												File Type : system_verilog
+//										Creation Date : 26-10-2018
+//												File Type : system_verilog
+//													 Author : Dorababu
+
+//****************************************************************************//
+../verif/read_in_reserve_test/read_in_reserve_test.sv
+../verif/read_only_test/read_only_test.sv
+../verif/read_test_1/read_test_1.sv
+../verif/read_test_2/read_test2.sv
+../verif/write_in_reserve_test/write_in_reserve_test.sv
+../verif/write_test_1/write_test_1.sv

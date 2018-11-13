@@ -2,67 +2,83 @@ class mc_driver extends uvm_driver#(mc_sequence_item);
 
 `uvm_component_utils(mc_driver)
 
+mc_sequence_item seq_item;
+
 virtual mc_interface vif;
+
 function new(string name="mc_driver",uvm_component parent);
   super.new(name,parent);
 endfunction
-function build_phase(uvm_phase phase);
+
+function void build_phase(uvm_phase phase);
   super.build_phase(phase);
 endfunction
 
 
-function connect_phase(uvm_phase phase);
+function void connect_phase(uvm_phase phase);
 	super.connect_phase(phase);
 	if(!uvm_config_db#(virtual mc_interface)::get (.cntxt(this),
-													.inst_name(""),
-													.field_name("vif"),
-													.value(vif)))
-	`uvm_fatal("get_interface""virtual interface is not available")
+																									.inst_name(""),
+																									.field_name("vif"),
+																									.value(vif)))
+	`uvm_fatal("get_interface","virtual interface is not available")
 	else
-	  `uvm_vifo(get_name(),$sformate ("virtual interface is connected"),UVM_HIGH)
-
+	  `uvm_info(get_name(),("virtual interface is connected"),UVM_HIGH)
 endfunction
 
-task run_phase();
-  reset();
+virtual task run_phase(uvm_phase phase);
+//  reset();
   drive();
 endtask
 
 
-task reset();
-  `uvm_info(get_name(),"reset operation performed.............")
-  vif.drv_cb.reset='b0;
+virtual task reset(mc_sequence_item seq_item);
   @(posedge vif.clk)
-	vif.drv_cb.reset='b1;	
+		vif.w_r<='b0;                                                    
+		vif.in_data<='b0;                                                   
+		vif.en<='b0;                                                      
+		vif.wr_addr<='b0;  
+		seq_item.print();
+		`uvm_info(get_name(),("reset operation performed............."),UVM_HIGH)
+		
 endtask
 
-task drive(mc_sequence_item seq_item);
-	  if(vif.wr==1)
+virtual task drive();
+forever
+begin
+  seq_item_port.get_next_item(seq_item);
+  if(seq_item.w_r==1)
 		write(seq_item);
-	  else 
+	else 
 		read(seq_item);
+	  
+		seq_item_port.item_done();
+	end
 endtask
 
 
-task write(seq_item);
-	vif.drv_cb.reset<='b1;
-	vif.drv_cb.w_r<=seq_item.w_r;
-	vif.drv_cb.in_data<='d24;
-	vif.drv_cb.en<=seq_item.en;
-	vif.drv_cb.wr_addr<=seq_item.wr_addr;
-	`uvm_info(get_name(),"write operation performed.............")
+task write(mc_sequence_item seq_item);
+	@(posedge vif.clk);
+	vif.w_r<=seq_item.w_r;
+	vif.in_data<=seq_item.in_data;
+	vif.en<=seq_item.en;
+	vif.wr_addr<=seq_item.wr_addr;
+	`uvm_info(get_name(),("write operation performed............."),UVM_HIGH)
+  $display("/************************driving write sequence to dut***************************************/");
+	seq_item.print();
   endtask
 
 
-  task read(seq_item);
-	vif.drv_cb.reset<='b1;
-	vif.drv_cb.w_r<=seq_item.w_r;
-	vif.drv_cb.en<=seq_item.en;
-	vif.drv_cb.wr_addr<=seq_item.wr_addr;
-	`uvm_info(get_name(),"read operation performed.............")
+  task read(mc_sequence_item seq_item);
+		@(posedge vif.clk);
+	vif.w_r<=seq_item.w_r;
+	vif.en<=seq_item.en;
+	vif.wr_addr<=seq_item.wr_addr;
+	`uvm_info(get_name(),("read operation performed............."),UVM_HIGH)
+  $display("/************************driving read sequence to dut***************************************/");
+	seq_item.print();
   endtask
 
-endtask
 
 
 endclass
